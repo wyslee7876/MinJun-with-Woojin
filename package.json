@@ -1,0 +1,9 @@
+{
+  "name": "ticket-helper",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node dev.mjs"
+  }
+}
