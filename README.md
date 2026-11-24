@@ -1,5 +1,11 @@
 # 티켓헬퍼 소스 코드
 
+## JSP/Servlet 프로젝트
+
+Java 웹 프로젝트는 Maven WAR로 패키징합니다. Maven이 설치된 환경에서 저장소 루트에서 `mvn clean package`를 실행하면 `target/tickethelper.war`가 생성됩니다.
+
+디렉터리 구조, MVC Model 2 계층별 책임, 코드와 커밋 규칙은 [JSP/Servlet 개발 가이드](docs/java-web.md)에서 확인할 수 있습니다.
+
 ## 실행
 Node.js 20 이상. 별도 패키지 설치가 필요 없습니다.
 

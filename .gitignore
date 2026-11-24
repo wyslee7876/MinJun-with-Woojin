@@ -5,6 +5,16 @@
 /worker/html.js
 /worker/snapshot.js
 
+# Maven build output
+/target/
+
+# Local Java IDE settings
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
 # Local environment variables and Cloudflare Worker secrets
 .env
 .env.*
