@@ -1,0 +1,14 @@
+# Maven build output
+/target/
+
+# Local Java IDE settings
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Local environment variables
+.env
+.env.*
+!.env.example

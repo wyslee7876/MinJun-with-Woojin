@@ -1,5 +1,11 @@
 # 🎵 Ticket Helper (티켓헬퍼)
 
+## JSP/Servlet 프로젝트
+
+Java 웹 프로젝트는 Maven WAR로 패키징합니다. 저장소 루트에서 `mvn clean package`를 실행하면 `target/tickethelper.war`가 생성됩니다.
+
+디렉터리 구조와 실행 방법은 [JSP/Servlet 개발 가이드](docs/java-web.md)에서 확인할 수 있습니다.
+
 > **내 주변의 공연을 발견하는 가장 쉬운 방법!**
 >
 > 공연을 찾는 순간부터 집에 돌아가는 순간까지, 공연 경험의 모든 과정을 연결하는 지도 기반 공연 정보 플랫폼
