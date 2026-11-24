@@ -32,7 +32,45 @@
 
 `src/main/resources`에는 WAR의 클래스패스에 포함할 설정과 리소스를 둡니다. `webapp`에는 JSP와 정적 파일을 둡니다. `database`에는 스키마와 개발용 초기 데이터를 관리하며, SQL은 WAR 밖에서 실행합니다.
 
-저장소 루트에서 `mvn clean package`를 실행하면 `target/tickethelper.war`가 생성됩니다. 현재 WAR는 디렉터리 구조를 검증하는 초기 산출물입니다. JDK, Tomcat, Servlet·JSTL 및 Oracle JDBC 설정은 #2에서 다루고, 스키마 설계는 #4에서 진행합니다.
+## 개발 환경 및 실행
+
+| 구성 | 버전과 설정 |
+| --- | --- |
+| Java | JDK 17 기준으로 컴파일합니다. `mvn -version`으로 Maven이 사용하는 JDK를 확인합니다. |
+| 웹 컨테이너 | Apache Tomcat 10.1.x |
+| Servlet·JSP | Servlet 6.0, JSP 3.1. Java 코드는 `jakarta.servlet` 네임스페이스를 사용하고 API는 Tomcat이 제공합니다. |
+| JSTL | Jakarta Tags API 3.0.2와 GlassFish 구현 3.0.1을 WAR에 포함합니다. 코어 태그 URI는 `jakarta.tags.core`입니다. |
+| Oracle JDBC | Oracle Thin 드라이버 `ojdbc8` 19.29.0.0을 Maven 런타임 의존성으로 사용합니다. |
+
+1. 저장소 루트에서 `mvn clean package`를 실행합니다.
+2. `target/tickethelper.war`를 Tomcat의 `webapps`에 복사합니다.
+3. Tomcat을 실행하고 기본 포트 기준 `http://localhost:8080/tickethelper/health`에 접속합니다. “JSP·Servlet 실행 확인 완료”가 표시되면 Servlet 요청, JSP 포워드와 JSTL 렌더링이 동작한 것입니다.
+
+[Tomcat과 Servlet·JSP 버전 대응표](https://tomcat.apache.org/whichversion.html)
+
+### Oracle JDBC 연결 확인
+
+Oracle 리스너를 실행하고 `CREATE SESSION` 권한이 있는 개발 계정을 사용합니다. 실행할 터미널에 아래 환경변수를 설정합니다.
+
+| 환경변수 | 값 |
+| --- | --- |
+| `TICKETHELPER_DB_URL` | 개발 DB 연결 URL. 서비스 이름이 `XEPDB1`이면 `jdbc:oracle:thin:@//localhost:1521/XEPDB1`, Oracle XE 11g의 SID가 `XE`이면 `jdbc:oracle:thin:@localhost:1521:XE` |
+| `TICKETHELPER_DB_USER` | 개발 계정 이름 |
+| `TICKETHELPER_DB_PASSWORD` | 개발 계정 비밀번호 |
+
+저장소 루트에서 `mvn clean package`를 실행한 뒤 JDBC 확인 클래스를 실행합니다.
+
+```powershell
+# Windows
+java -cp "target/test-classes;target/tickethelper/WEB-INF/lib/*" com.tickethelper.dao.OracleConnectionCheck
+```
+
+```sh
+# macOS / Linux
+java -cp 'target/test-classes:target/tickethelper/WEB-INF/lib/*' com.tickethelper.dao.OracleConnectionCheck
+```
+
+연결에 성공하면 `SELECT 1 FROM DUAL` 결과를 확인하고 성공 메시지를 출력합니다. JVM이 환경변수를 읽으므로 DB 비밀번호를 POM이나 명령 인자에 넣을 필요가 없습니다. 이 확인은 #4의 애플리케이션 테이블을 요구하지 않습니다.
 
 ## MVC Model 2
 
