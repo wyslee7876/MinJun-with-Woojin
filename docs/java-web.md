@@ -88,6 +88,29 @@ java -cp 'target/test-classes:target/tickethelper/WEB-INF/lib/*' com.tickethelpe
 
 JSP는 `WEB-INF/views` 아래에 배치하고 Servlet을 통해 접근하게 합니다. SQL은 DAO에, 비즈니스 규칙은 Service에 둡니다.
 
+## 공통 JSP 레이아웃
+
+`<head>`에 `head.jsp`를 포함하면 UTF-8과 모바일 뷰포트 설정, 공통 스타일을 가져옵니다. 페이지별 `<title>`은 각 JSP에서 지정합니다. 공통 헤더와 푸터 사이에 `id="main-content"`가 있는 `<main>`을 두면 본문 바로가기 링크가 작동합니다. `/health`가 이 구조를 사용합니다.
+
+```jsp
+<jsp:include page="/WEB-INF/views/common/head.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<main id="main-content" class="container site-main" tabindex="-1">
+    <!-- 페이지별 콘텐츠 -->
+</main>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+```
+
+`css/site.css`의 `:root`에서 배경·본문·보조 텍스트·보라색 강조 색상과 타이포그래피를 관리합니다. 본문은 시스템 글꼴 1rem, 보조 텍스트는 .875rem, 제목은 화면 폭에 따라 1.6–2.4rem을 사용합니다.
+
+| 요소 | 클래스와 사용 방법 |
+| --- | --- |
+| 버튼 | `.button`을 기본으로 사용하고, 화면의 주요 동작에 `.button--primary`를 추가합니다. 이동에는 링크를, 폼 제출에는 버튼을 사용합니다. |
+| 카드 | `.card`로 콘텐츠를 묶습니다. 배경, 테두리, 여백과 모서리 모양을 공통 CSS가 제공합니다. |
+| 검색 | GET 폼에 `.search-form`, 검색 입력에 `.search-form__input`, 제출 버튼에 `.button`을 사용합니다. 입력에 `<label>` 또는 `aria-label`을 지정합니다. |
+
+`.container`는 콘텐츠 최대 폭을 72rem으로 제한합니다. 40rem 이하에서 좌우 여백을 줄이고 검색 입력과 버튼을 세로로 쌓습니다. 새 화면도 키보드 포커스 표시와 모바일에서의 줄바꿈을 확인합니다.
+
 ## 코드와 Git 규칙
 
 - Java 패키지는 소문자, 클래스는 `UpperCamelCase`, 메서드와 변수는 `lowerCamelCase`, 상수는 `UPPER_SNAKE_CASE`를 사용합니다. Java 소스는 UTF-8과 공백 4칸 들여쓰기를 사용합니다.
